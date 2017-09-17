@@ -1,6 +1,6 @@
 # Template file for 'samba'
 pkgname=samba4
-version=4.6.4
+version=4.9.4
 revision=1
 build_style=waf
 configure_script=buildtools/bin/waf
@@ -25,20 +25,20 @@ maintainer="Enno Boland <gottox@voidlinux.eu>"
 license="GPL-3"
 homepage="http://www.samba.org"
 distfiles="https://download.samba.org/pub/samba/stable/samba-$version.tar.gz"
-checksum=4ac67329d18e5586dc75db50e23b81c1f6c45a2d5bb9752ea6d90dcca08d9a61
+checksum=6d98a8d8bcccbe788e4bbb406362e6676311aca711a3f3cc9b3a404bb9ff0b4f
 CFLAGS="-DUSE_SETUIDX=0"
 conflicts="samba>=0"
 provides="samba-${version}_${revision}"
 conf_files="/etc/pam.d/samba /etc/samba/smb.conf"
 make_dirs="/etc/samba/private 0750 root root"
-hostmakedepends="pkg-config perl python"
+hostmakedepends="pkg-config perl python docbook2x"
 makedepends="readline-devel libcap-devel popt-devel e2fsprogs-devel
  gnutls-devel python-devel
- libldap-devel pam-devel acl-devel avahi-libs-devel tdb-devel talloc-devel cups-devel"
+ libldap-devel pam-devel acl-devel avahi-libs-devel tdb-devel talloc-devel cups-devel lmdb-devel jansson-devel gpgme-devel libarchive-devel"
 
 if [ "$CROSS_BUILD" ]; then
 	configure_args+=" --bundled-libraries=!asn1_compile,!compile_et"
-	hostmakedepends+=" heimdal-devel"
+	hostmakedepends+=" heimdal-devel docbook2x"
 fi
 
 pre_configure() {
@@ -57,7 +57,7 @@ pre_configure() {
 post_install() {
 	mv $DESTDIR/usr/sbin/* $DESTDIR/usr/bin
 	vmkdir etc/samba
-	vinstall packaging/LSB/smb.conf 644 etc/samba
+	vinstall examples/smb.conf.default 644 etc/samba smb.conf
 	vinstall $FILESDIR/samba.pam 644 etc/pam.d samba
 	vsv nmbd
 	vsv smbd
