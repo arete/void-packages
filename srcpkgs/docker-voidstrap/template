@@ -1,0 +1,17 @@
+# Template file for 'docker-voidstrap'
+pkgname=docker-voidstrap
+version=0.1
+revision=1
+build_style=meta
+homepage="http://www.voidlinux.eu/"
+short_desc="Void Linux base system meta package for docker containers"
+maintainer="Juan RP <xtraeme@voidlinux.eu>"
+license="Public domain"
+
+depends="
+ base-files dash bash coreutils grep xbps iana-etc tzdatai sed" 
+
+case "$XBPS_TARGET_MACHINE" in
+	*-musl) depends+=" musl";;
+	*) depends+=" glibc-locales";;
+esac
