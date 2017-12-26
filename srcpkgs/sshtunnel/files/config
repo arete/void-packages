@@ -1,0 +1,9 @@
+SERVER="myserver.eu"
+
+FORWARD="-L 8080:192.168.2.251:80"
+SSH_OPT="-4 -N -T -o TCPKeepAlive=no -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  -o BatchMode=yes -o ServerAliveInterval=15"
+LOCAL_USER="sshtunnel"
+REMOTE_USER="tunnel"
+PORT=10000
+IDENTITY="/etc/sv-sshtunnel/id_ed25519"
+

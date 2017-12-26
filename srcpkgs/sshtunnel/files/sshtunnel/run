@@ -1,0 +1,14 @@
+#!/bin/sh
+exec 2>&1
+
+. /etc/sshtunnel/config
+
+if [ -z "$SERVER" ]; then
+    echo "Error: no SERVER given"
+    exit 1
+fi
+
+config=${PWD##*-}
+echo "${config}"
+
+exec chpst -u "$LOCAL_USER" ssh $FORWARD $SSH_OPT -i "$IDENTITY" "${REMOTE_USER}@${SERVER}" -p $PORT

@@ -1,0 +1,2 @@
+#!/bin/sh
+exec logger -i -p daemon.info -t sshtunnel

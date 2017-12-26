@@ -1,0 +1,19 @@
+pkgname="sshtunnel"
+short_desc="ssh tunnel services"
+version=0.0.1
+revision=1
+license="GPL-2"
+homepage="http://www.voidlinux.eu/"
+build_style="meta"
+depends="runit"
+
+
+conf_files="/etc/sshtunnel/config"
+system_accounts="sshtunnel"
+make_dirs="/etc/sshtunnel 0750 sshtunnel sshtunnel"
+do_install() {
+	vinstall  ${FILESDIR}/config 0644 etc/sshtunnel/
+        vsv sshtunnel
+}
+
+
