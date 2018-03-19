@@ -1,0 +1,21 @@
+# Template file for 'minio'
+pkgname=minio
+version=2018.03.16
+_version="${version//./-}T22-52-12Z"
+revision=1
+wrksrc=$pkgname-RELEASE.$_version 
+build_style=go
+hostmakedepends="git"
+short_desc="Object storage server compatible with Amazon S3"
+maintainer="Gerardo Di Iorio <arete74@gmail.com>"
+license="Apache-2.0"
+homepage="https://github.com/minio/minio"
+go_import_path="github.com/minio/minio"
+#go_package="github.com/odeke-em/drive/cmd/drive github.com/odeke-em/drive/drive-server "
+distfiles="$homepage/archive/RELEASE.$_version.tar.gz"
+checksum=186fd9aded3900ba05f94702a66d2dc620a94d5a59a53ee62d7af7fe9da01c76
+
+post_install() {
+	vdoc README.md
+	vlicense LICENSE
+}
