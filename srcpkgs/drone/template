@@ -1,0 +1,23 @@
+# Template file for 'drone'
+pkgname=drone
+version=0.8.5
+revision=1
+build_style=go
+go_import_path="github.com/drone/drone"
+go_package="github.com/drone/drone/cmd/drone-server github.com/drone/drone/cmd/drone-agent"
+conf_files="/etc/drone/server /etc/drone/agent"
+make_dirs="/var/lib/drone 0755 root root"
+hostmakedepends="git"
+short_desc="Drone is a Continuous Delivery platform built on Docker"
+maintainer="Gerardo Di Iorio <arete74@gmail.com>"
+license="Apache-2.0"
+homepage="https://github.com/drone/drone"
+distfiles="https://github.com/drone/drone/archive/v0.8.5.tar.gz"
+checksum=f8ce19d1ce106c0477cd5baf6f2dc412675707ddc90c00a26a6cdb21a4d42ceb
+
+
+
+post_install() {
+	vdoc README.md
+	vlicense LICENSE
+}
