@@ -1,39 +1,50 @@
 # Template file for 'couchdb'
 pkgname=couchdb
-version=1.7.1
+version=2.2.0
 revision=1
 wrksrc="apache-couchdb-$version"
-build_style=gnu-configure
-conf_files="/etc/couchdb/default.ini /etc/couchdb/local.ini"
-hostmakedepends="erlang pkg-config"
+build_style=configure
+conf_files="/etc/couchdb/local.ini"
+hostmakedepends="erlang20 pkg-config"
 makedepends="libressl-devel icu-devel js-devel libcurl-devel"
-depends="erlang"
 short_desc="A document-oriented database"
 maintainer="Gerardo Di Iorio <arete74@gmail.com>"
 license="Apache-2.0"
 homepage="http://couchdb.apache.org/"
 distfiles="https://dist.apache.org/repos/dist/release/couchdb/source/${version}/apache-couchdb-${version}.tar.gz"
-checksum=91200aa6fbc6fa5e2f3d78ef40e39d8c1ec7c83ea1c2cd730d270658735b2cad
+checksum=0e3ceb8aab73af8e54a2e2c949f362495b1c938455a15e9a4e294901c6c67985
+make_build_args+='release'
 
 system_accounts="couchdb"
 couchdb_homedir="/var/lib/couchdb"
 make_dirs="
 	/var/lib/couchdb 0700 couchdb couchdb
-	/var/log/couchdb 0750 couchdb couchdb"
+	/var/log/couchdb 0750 couchdb couchdb
+	/etc/couchdb     0700 couchdb couchdb"
 
 if [ "$CROSS_BUILD" ]; then
+	export ARCH=arm
 	makedepends+=" erlang"
-	configure_args="--with-erlang=${XBPS_CROSS_BASE}/usr/lib/erlang/usr/include"
 fi
 
-pre_configure() {
-	sed -i 's|-Werror|-pie -fPIE|g' src/couchdb/priv/Makefile.*
-if [ "$CROSS_BUILD" ]; then
-	sed -i '/FLAGS.*\(usr\|opt\)/s/.*/:/' configure
-fi
+do_install() {
+	# CouchDB 2.0.0 does not support "make install" yet
+	vmkdir /usr/lib/
+	vmkdir /etc/couchdb/
+	vmkdir /var/lib/couchdb/
+	vinstall rel/couchdb/etc/local.ini  644 etc/couchdb/
+	#Copy datadirs config file
+	# remove local erts
+	rm -rf rel/couchdb/erts-8.1
+	vcopy rel/couchdb usr/lib/couchdb
+	#Copy datadirs config file
+	vcopy  ${FILESDIR}/datadirs.ini  etc/couchdb/datadirs.ini
+	# use system erts
+	ln -s /usr/lib/erlang/erts-8.1 "${DESTDIR}"/usr/lib/couchdb/erts-8.1
 }
 
-
 post_install() {
+	vlicense rel/couchdb/LICENSE
+	vman rel/couchdb/share/docs/couchdb.1
 	vsv couchdb
 }
