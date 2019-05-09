@@ -1,6 +1,6 @@
 # Template file for 'samba4'
 pkgname=samba4
-version=4.9.4
+version=4.10.2
 revision=1
 wrksrc="samba-$version"
 build_style=waf
@@ -16,7 +16,7 @@ maintainer="Gerardo Di Iorio <arete74@gmail.com>"
 license="GPL-3"
 homepage="http://www.samba.org"
 distfiles="https://download.samba.org/pub/samba/stable/samba-$version.tar.gz"
-checksum=6d98a8d8bcccbe788e4bbb406362e6676311aca711a3f3cc9b3a404bb9ff0b4f
+checksum=878cfdc51b74fafb604399c381c690b325061eb63fc17a188a505e96fa8f5e84
 provides="samba-${version}_${revision}"
 conflicts="samba>=0"
 CFLAGS="-DUSE_SETUIDX=0"
