@@ -1,6 +1,6 @@
 # Template file for 'network-manager-applet'
 pkgname=network-manager-applet
-version=1.8.24
+version=1.18.0
 revision=1
 build_style=gnu-configure
 build_helper="gir"
@@ -16,7 +16,7 @@ license="GPL-2.0-or-later"
 homepage="https://wiki.gnome.org/Projects/NetworkManager"
 changelog="https://raw.githubusercontent.com/NetworkManager/network-manager-applet/master/NEWS"
 distfiles="${GNOME_SITE}/${pkgname}/${version%.*}/${pkgname}-${version}.tar.xz"
-checksum=118bbb8a5027634b62e8b45b16ceafce74441529c99bf230654e3bec38f9fbbf
+checksum=ddbb400ace804b59cc513611ce9701f7ef3f00de151dbbfb96284c8c1ef2b18b
 lib32disabled=yes
 
 # Package build options

@@ -1,0 +1,35 @@
+# Template file for 'libnma'
+pkgname=libnma
+version=1.8.30
+revision=1
+#archs="i686 x86_64"
+#wrksrc=
+#create_wrksrc=yes
+build_style=meson
+build_helper="gir"
+#configure_args=""
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="pkg-config"
+makedepends="iso-codes"
+depends="iso-codes"
+short_desc="NetworkManager GUI client library"
+maintainer="Gerardo Di Iorio <arete74@gmail.com>"
+license="GPL-3.0-or-later"
+homepage="https://wiki.gnome.org/Projects/NetworkManager/"
+distfiles="${GNOME_SITE}/${pkgname}/${version%.*}/${pkgname}-${version}.tar.xz"
+checksum=da33e72a49e07d855d97a52aa9a8962a4c96f52b9168c4e0027117ad8ffdafb4
+
+libnma-devel_package() {
+	depends="${sourcepkg}>=${version}_${revision}"
+	short_desc+=" - development files"
+	pkg_install() {
+		vmove usr/share/man/man3
+		vmove usr/include
+		vmove usr/lib/pkgconfig
+		vmove "usr/lib/*.a"
+		vmove "usr/lib/*.so"
+	}
+}
