@@ -1,0 +1,21 @@
+# Template file for 'pgpool-II'
+pkgname=pgpool-II
+version=4.3.1
+revision=1
+build_style=gnu-configure
+configure_args="--with-pid-dir=/run --sysconfdir=/etc/pgpool --with-openssl=openssl"
+#make_build_args=""
+#make_install_args=""
+conf_files="/etc/pgpool/*.conf "
+make_dirs="/var/run/pgpool 0755 root root"
+short_desc="Middleware between PostgreSQL servers client"
+maintainer="Gerardo Di iorio <arete74@gmail.com>"
+license="GPL-3.0-or-later"
+homepage="https://www.pgpool.net"
+distfiles="https://www.pgpool.net/mediawiki/images/pgpool-II-${version}.tar.gz"
+checksum=b4416bf4507882847a0e72ebe80209a7bf3b104aef03837d528502d84203507a
+
+post_install() {
+	vinstall ${wrksrc}/src/sample/pgpool.conf.sample 644 etc/pgpool/ pgpool.conf
+	vinstall ${wrksrc}/src/sample/pcp.conf.sample 644 etc/pgpool/ pcp.conf
+}
